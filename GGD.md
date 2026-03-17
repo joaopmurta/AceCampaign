@@ -1,31 +1,56 @@
-[1] Core Loop: Escala o time -> duela via eventos de texto -> Recebe pontos e recursos -> Treina time | Aprimora sede do clube -> Repete
-[2] Business Rules: 
-   A) Moedas do clube
-   - Como o jogador recebe moedas do clube:
-       - Orçamento liberado pelo clube
-       - Patrocínios
-       - Recompensa por vitórias
-       - Recompensa dourada por títulos
-   - Como o jogador gasta moedas do clube:
-       - Contratando reforços
-       - Aprimorando a sede do clube
-       - Treinando o time
-       - Tratamento de lesões
-       - Inscrição em torneios
-       - Amistosos fora de casa
-   - Como o jogador perde moedas do clube:
-       - Derrotas em partidas
-       - Corte de orçamento
-       - Falimento do clube
-    B) Moedas do treinador
-     - Como o jogador recebe moedas do treinador:
-       - Salário do clube
-       - Entrevistas
-     - Como o jogador gasta moedas do treinador:
-       - Multa de recissão
-       - Investindo no clube do próprio bolso
-     - Como o jogador perde moedas do jogador:
-       - Corte de orçamento
-       - Falimento do clube
-[3] Game Over: o jogador nunca precisa criar um novo perfil, mas caso seja demitido por má performance como treinador ou caso seu clube vá a falência, deixando-o com baixa reputação, será difícil conseguir oportunidade em clubes de nível médio para cima. Com isto, o jogador é obrigaod a recomeçar com poucos recursos em um clube da liga B.
+# 🏐 Game Design Document (GDD) - Vôlei Manager
+
+## 1. Core Loop
+> **Escala o time** ➔ **Duela via eventos de texto** ➔ **Recebe pontos e recursos** ➔ **Treina time / Aprimora sede** ➔ **Repete**
+
+---
+
+## 2. Regras de Negócio (Economia)
+
+A economia do jogo é dividida em dois pilares: o caixa da instituição e o patrimônio pessoal do treinador.
+
+### 🏢 A) Moedas do Clube
+Representa o orçamento oficial e os recursos da equipe.
+
+**Entradas (Como o clube recebe):**
+* Orçamento liberado pela diretoria
+* Patrocínios
+* Recompensas por vitórias em partidas
+* Recompensa dourada por títulos (Premiações)
+
+**Saídas (Como o clube gasta):**
+* Contratação de reforços
+* Aprimoramento da sede e infraestrutura
+* Treinamento do time
+* Tratamento médico de lesões
+* Taxas de inscrição em torneios
+* Custos de viagem e logística para amistosos fora de casa
+
+**Perdas (Riscos financeiros):**
+* Queda de arrecadação por derrotas em partidas
+* Cortes de orçamento impostos pela diretoria
+* Falência do clube (Zerar o caixa)
+
+### 👔 B) Moedas do Treinador
+Representa o dinheiro pessoal do jogador.
+
+**Entradas (Como o treinador recebe):**
+* Salário pago pelo clube
+* Cachês de entrevistas e marketing pessoal
+
+**Saídas (Como o treinador gasta):**
+* Pagamento de multa rescisória (para sair do clube atual)
+* Investimento no clube do próprio bolso (injeção de capital de emergência)
+
+**Perdas (Riscos pessoais):**
+* Cortes no salário por mau desempenho
+* Calote devido à falência do clube
+
+---
+
+## 3. Game Over e Progressão
+O jogo **não** possui um "Game Over" tradicional onde o jogador perde o perfil e precisa recriar o personagem. A progressão é contínua e punitiva caso haja má gestão:
+
+* **Demissão e Falência:** Caso o treinador seja demitido por má performance ou o clube vá à falência, a **reputação** do jogador sofre uma queda drástica.
+* **Consequência:** Com a reputação manchada, portas se fecham. Será muito difícil conseguir propostas de clubes de nível médio ou alto. O jogador é obrigado a recomeçar com recursos escassos, assumindo um clube da **Superliga B**, precisando provar seu valor novamente para reerguer sua carreira.
        
