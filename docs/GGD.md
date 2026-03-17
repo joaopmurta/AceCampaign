@@ -54,6 +54,8 @@ O jogo **não** possui um "Game Over" tradicional onde o jogador perde o perfil 
 * **Demissão e Falência:** Caso o treinador seja demitido por má performance ou o clube vá à falência, a **reputação** do jogador sofre uma queda drástica.
 * **Consequência:** Com a reputação manchada, portas se fecham. Será muito difícil conseguir propostas de clubes de nível médio ou alto. O jogador é obrigado a recomeçar com recursos escassos, assumindo um clube da **Superliga B**, precisando provar seu valor novamente para reerguer sua carreira.
 
+---
+
 ## 4. Entidades e Atributos (Mecânicas de Jogo)
 
 Esta seção define as características de cada elemento do jogo e como elas impactam a jogabilidade, a simulação das partidas e a gestão do time.
