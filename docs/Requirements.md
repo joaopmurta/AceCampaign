@@ -8,12 +8,12 @@ Este documento lista todas as funcionalidades, regras de negócio e restrições
 *Ações e interações que o sistema DEVE executar. Agrupados por domínio.*
 
 ### 👔 Gestão e Energia do Treinador (O Jogador)
-* **RF001:** O sistema deve permitir que o jogador assine contratos com clubes no início de uma temporada ou recuse propostas.
+* **RF001:** O sistema deve permitir que o jogador assine contratos com clubes no início de uma temporada dadas as opções.
 * **RF002:** O sistema deve enviar propostas esporádicas de outros clubes, que podem ou não cobrir a taxa de rescisão atual, baseando-se na Reputação do treinador.
 * **RF003:** O jogador deve poder pagar a própria multa rescisória usando seu "Caixa Pessoal" para mudar de clube antecipadamente.
 * **RF004:** O jogador deve poder injetar dinheiro do seu Caixa Pessoal no Orçamento do Clube para evitar falência.
-* **RF005:** O sistema deve gerenciar a "Energia do Treinador" (0 a 100%), descontando pontos por ações como aplicar treinos específicos na equipe ou dar entrevistas.
-* **RF006:** O sistema deve enviar convites esporádicos para entrevistas (TV/Rádio/Podcast), oferecendo moedas pessoais ao jogador em troca do consumo de 100% da sua Energia.
+* **RF005:** O sistema deve gerenciar a "Energia do Treinador" (0 a 100%), descontando pontos por ações como aplicar treinos na equipe ou dar entrevistas.
+* **RF006:** O sistema deve enviar convites esporádicos para entrevistas (TV/Rádio/Podcast), oferecendo moedas pessoais ao jogador em troca do consumo de 30% da sua Energia.
 * **RF007:** O sistema deve recarregar parcialmente a Energia do treinador automaticamente após cada partida/rodada, ou ao longo do tempo (offline).
 * **RF008:** O sistema deve permitir que o jogador inicie uma partida mesmo com 0% de Energia, bloqueando apenas ações pré-jogo que exijam esforço.
 * **RF009:** O sistema deve registrar as conquistas (troféus e medalhas) do treinador em seu histórico.
@@ -26,14 +26,15 @@ Este documento lista todas as funcionalidades, regras de negócio e restrições
 ### 🛒 Mercado de Transferências e Elenco
 * **RF013:** O sistema deve exibir uma aba de "Mercado" com jogadoras disponíveis para contratação.
 * **RF014:** O sistema deve permitir que o jogador faça ofertas, deduzindo o "Valor de Contratação" (passe) do orçamento do clube e adicionando o "Salário" à folha de pagamento.
-* **RF015:** O sistema deve processar o aceite ou recusa de uma jogadora à proposta com base no nível do clube interessado e na Reputação do treinador.
+na verdade deve ser tipo: clube X pede Y por jogadora Z. o tecnico pode ofertar qualquer valor. se for y < Y, as chances vao diminuindo. Se for y > Y, as chances vao aumentando. A jogadora, enfim, pode recusar ou aceitar. Contudo, o salário é "fixo" com base no desempenho da jogadora, e vai aumentando aos poucos conforme os treinos. 
+* **RF015:** O sistema deve processar o aceite ou recusa de uma jogadora à proposta com base no nível do clube interessado e na Reputação do treinador, além do valor ofertado.
 * **RF016:** O sistema deve gerar eventos onde clubes rivais pagam a multa rescisória de uma jogadora do seu time de forma abrupta, injetando o valor no orçamento do seu clube sem penalizar a Reputação do treinador.
-* **RF017:** O sistema deve permitir a aplicação de treinamentos (Técnico, Físico, Tático), consumindo recursos do clube e energia do treinador para aumentar os atributos base das jogadoras.
+* **RF017:** O sistema deve permitir a aplicação de treinamentos (Técnico, Físico, Tático), consumindo recursos do clube e 20% de energia do treinador para aumentar os atributos base das jogadoras.
 * **RF018:** O sistema deve diminuir a *Stamina* das jogadoras em quadra (proporcional ao tempo jogado e à sua *Resistência*) e recuperá-la entre partidas (influenciado pelo nível da Equipe Médica).
 * **RF019:** O sistema deve alterar o status físico de uma jogadora para "Lesionada" caso ela jogue com *Stamina* crítica ou sofra um evento de lesão.
-
+!!! vender jogadoras deve ser possível, tendo de pagar uma parte do valor para ela (como uma demissao sem justa causa)
 ### 🏐 Escalação e Estatísticas
-* **RF020:** O sistema deve permitir a escalação de um elenco de até 14 jogadoras por partida.
+* **RF020:** O sistema deve permitir a escalação de um elenco de até 14 jogadoras por temporada.
 * **RF021:** O sistema deve exibir painéis de estatísticas individuais (ataque, bloqueio, saque, defesa/passe) adaptados por posição.
 * **RF022:** O sistema deve calcular e exibir a média de desempenho do time e das jogadoras em cada fundamento, tanto por partida quanto por campeonato.
 
