@@ -83,6 +83,8 @@ classDiagram
         +calcular_probabilidade_aceite()
         +gerar_evento_multa_paga()
     }
+
+    class MercadoDeTransferencias {
         +calcular_probabilidade_aceite()
         +gerar_evento_multa_paga()
     }
