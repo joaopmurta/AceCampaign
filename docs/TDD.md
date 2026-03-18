@@ -1,90 +1,92 @@
 # 💻 Technical Design Document (TDD) - Vôlei Manager
 
 ## 1. Arquitetura do Sistema
-O jogo utilizará uma arquitetura orientada a objetos com separação clara entre **Classes de Domínio** (dados físicos como Jogadoras, Clubes e Infraestrutura) e **Classes de Controle** (sistemas que gerenciam regras, como Temporadas, Torneios e o Motor da Partida).
+Arquitetura orientada a objetos dividida em **Classes de Domínio** (dados e modelos persistentes) e **Classes de Controle** (sistemas de simulação e regras de negócio). O estado do jogo deve ser serializável (SQLite/JSON local) para suportar o design *Offline First*.
 
 ---
 
 ## 2. Classes de Domínio (Modelos de Dados)
 
+### `Campanha` (Save Game)
+* `id_campanha: String (UUID)`
+* `slot: Integer` (1 a 3)
+* `data_criacao: DateTime`
+* `treinador_id: String`
+* `banco_dados_mundo: Referencia` (Estado das outras ligas e histórico)
+
 ### `Treinador`
 * `id_treinador: String (UUID)`
-* `nome: String`
-* `nacionalidade: String`
+* `nome: String`, `genero: String`, `nacionalidade: String`
+* `estilo_avatar: String`
 * `experiencia_xp: Integer`
 * `perspicacia: Integer`
-* `gerenciamento: Integer`
-* `clube_atual: Clube` (Pode ser nulo)
+* `reputacao: Integer`
+* `energia_atual: Float` (0 a 100)
 * `caixa_pessoal: Float`
-* `conquistas: Dicionario` (Ex: {"trofeus": 2, "ouro": 2, "prata": 0, "bronze": 1})
+* `clube_atual: Clube` (Pode ser nulo)
+* `conquistas: Dicionario`
+* **Métodos:** `gastar_energia(valor)`, `recarregar_energia()`, `converter_moedas_para_clube()`, `pagar_multa_rescisoria()`
 
 ### `Clube`
 * `id_clube: String (UUID)`
 * `nome: String`
+* `is_controlado_por_jogador: Boolean`
 * `orcamento: Float`
-* `infraestrutura: Infraestrutura` (Objeto aninhado detalhado abaixo)
+* `infraestrutura: Infraestrutura`
 * `elenco: Lista<Jogadora>`
-* `divisao_nacional_atual: Integer` (1 para Liga A, 2 para Liga B)
+* `divisao_nacional_atual: Integer`
 * `conquistas: Dicionario`
+* **Métodos:** `processar_falencia()`, `vender_jogadora()`, `receber_injecao_capital()`
 
 ### `Infraestrutura`
-Controla o nível das instalações do clube. Cada atributo vai de 0 a 100. O nível geral do clube é a média desses 5 pilares, começando por volta de 10% em clubes menores.
-* `arquibancadas: Integer` (Aumenta receita de bilheteria)
-* `capacitacao_staff: Integer` (Aumenta a eficiência geral do clube)
-* `equipamentos_treino: Integer` (Aumenta a eficácia dos treinos das jogadoras)
-* `equipe_medica: Integer` (Reduz chance de lesão e acelera recuperação)
-* `quadra_instalacoes: Integer` (Piso, iluminação, vestiários; atrai mais público e moral)
-* **Método:** `calcular_nivel_geral(): Float` (Retorna a média máxima de 100%)
+* `arquibancadas: Integer`, `capacitacao_staff: Integer`
+* `equipamentos_treino: Integer`, `equipe_medica: Integer`
+* `quadra_instalacoes: Integer`, `marketing: Integer` (Todos de 0 a 100)
+* **Métodos:** `calcular_nivel_geral(): Float`, `melhorar_area(tipo_area)`
 
 ### `Jogadora`
 * `id_jogadora: String (UUID)`
-* `nome: String`
-* `posicao: String` (Enum: LEV, OPO, PON, CEN, LIB)
-* `atributos_base: Dicionario` (Tecnica, Forca, Agilidade, Visao, **Resistencia**)
-* `stamina_atual: Float` (0 a 100%)
-* `status_fisico: String` (Enum: SAUDAVEL, FADIGADA, LESIONADA)
+* `nome: String`, `posicao: String` (LEV, OPO, PON, CEN, LIB)
+* `atributos_base: Dicionario` (Tecnica, Forca, Agilidade, Visao, Resistencia)
+* `stamina_atual: Float` (0 a 100)
+* `status_fisico: String` (SAUDAVEL, FADIGADA, LESIONADA)
+* `valor_passe: Float`
 * `salario: Float`
 * `conquistas: Dicionario`
-* **Métodos Principais:**
-  * `desgastar(minutos_jogados: Integer)`: Reduz a `stamina_atual`. A taxa de perda é inversamente proporcional ao atributo `Resistencia`.
-  * `recuperar_stamina(foi_poupada: Boolean)`: Roda após cada partida. Se `foi_poupada` for True, recupera muito. Se jogou, recupera pouco, dependendo do nível da `equipe_medica` do clube.
+* **Métodos:** `desgastar_stamina()`, `recuperar_stamina(nivel_medico)`, `calcular_desempenho_atual()`
 
 ---
 
 ## 3. Classes de Controle (Sistemas)
 
-### `GerenciadorDeTemporada` (Season Manager)
-Controla o calendário e o pipeline de torneios.
+### `GerenciadorDeTemporada` (Season Manager & Simulação Global)
 * `ano_atual: Integer`
 * `torneios_ativos: Lista<Torneio>`
-* **Métodos:**
-  * `avancar_temporada()`
-  * `gerar_vagas_internacionais()`
+* **Métodos Principais:**
+  * `avancar_calendario()`
+  * `simular_ligas_ia()`: Processa os resultados e atribui títulos aos clubes não controlados pelo jogador.
+  * `aplicar_envelhecimento_e_premiacoes()`
+
+### `MercadoDeTransferencias`
+* `lista_transferencias: Lista<Jogadora>`
+* **Métodos Principais:**
+  * `calcular_probabilidade_aceite(valor_ofertado, valor_pedido, nivel_clube, reputacao_treinador)`
+  * `gerar_evento_multa_paga(clube_jogador)`: IA tenta comprar jogadora do jogador abruptamente.
 
 ### `Torneio`
-Gerencia a estrutura e as fases das competições.
 * `id_torneio: String`
-* `tipo: String` (Enum: SUPERLIGA, COPA_NACIONAL, INTERCONTINENTAL, MUNDIAL)
-* `formato: String` (Enum: PONTOS_CORRIDOS_COM_PLAYOFF, MATA_MATA_PURO)
-* `fase_atual: String` (Ex: "Classificatória", "Quartas de Final", "Final")
+* `tipo: String` (SUPERLIGA, COPA, INTERCONTINENTAL, MUNDIAL)
+* `formato: String` (PONTOS_CORRIDOS, MATA_MATA)
 * `clubes_inscritos: Lista<Clube>`
-* **Mecânicas de Formato:**
-  * **Superliga:** Todos contra todos na primeira fase. Os melhores avançam para um mata-mata final.
-  * **Copas, Intercontinental e Mundial:** Formato de chaveamento direto (mata-mata). Se perder, está eliminado daquela edição.
+* **Métodos:** `gerar_tabela()`, `processar_fase_mata_mata()`
 
 ### `MotorDePartida` (Match Engine)
-Simula os jogos de forma dinâmica, em blocos, para não entediar o jogador.
-* `time_casa: Clube`
-* `time_visitante: Clube`
+* `time_casa: Clube`, `time_visitante: Clube`
 * `placar_sets: Dicionario`
-* `pontos_set_atual: Dicionario`
+* `estatisticas_individuais: Dicionario` (Acompanha pontos de Atq/Blq/Saq por jogadora)
 * **Métodos Principais:**
-  * `simular_trecho()`: Em vez de processar ponto a ponto, a engine calcula um "salto" no placar (ex: de 0x0 para 5x3). A probabilidade de quem marcou os pontos nesse trecho depende da média dos atributos em quadra (ex: ataque x bloqueio).
-  * `verificar_gatilho_evento()`: Após cada `simular_trecho()`, a engine checa se um evento aleatório deve acontecer (baseado em RNG e atributos). Se sim, pausa o jogo e chama o evento.
-  * `disparar_evento()`: Mostra o aviso na tela (ex: Inversão de 5x1, Lesão, Desafio) aguardando a decisão do treinador.
-
-### `EventoPartida` (Avisos e Decisões)
-* `id_evento: String`
-* `texto_mensagem: String` 
-* `opcoes_resposta: Dicionario`
-* `consequencia(opcao_escolhida)`
+  * `validar_formacao_obrigatoria()`: Checa a regra dos 7 em quadra e posições.
+  * `simular_bloco_pontos()`: Calcula probabilidade e atribui os pontos do bloco a jogadoras específicas em tempo real ($O(N)$ leve).
+  * `verificar_limites_interrupcao()`: Controla os desafios e tempos técnicos (2 por set).
+  * `invocar_minigame_cartas()`: Pausa o bloco de pontos e apresenta 3 cartas de buff/debuff temporário ao jogador.
+  * `disparar_evento_texto()`: Chama avisos como lesão e inversões.
