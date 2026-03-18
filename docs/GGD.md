@@ -1,96 +1,57 @@
 # 🏐 Game Design Document (GDD) - Vôlei Manager
 
 ## 1. Core Loop
-> **Escala o time** ➔ **Duela via eventos de texto** ➔ **Recebe pontos e recursos** ➔ **Treina time / Aprimora sede** ➔ **Repete**
+> **Escala o time** ➔ **Duela via simulação/eventos/cartas** ➔ **Recebe pontos e recursos** ➔ **Treina time / Aprimora sede** ➔ **Repete**
 
 ---
 
-## 2. Regras de Negócio (Economia)
+## 2. Regras de Negócio (Economia e Energia)
 
-A economia do jogo é dividida em dois pilares: o caixa da instituição e o patrimônio pessoal do treinador.
+A economia e a gestão de recursos são divididas em dois pilares principais: o clube e a pessoa física do treinador.
 
-### 🏢 A) Moedas do Clube
-Representa o orçamento oficial e os recursos da equipe.
+### 🏢 A) Recursos do Clube (Moedas e Orçamento)
+Representa o orçamento oficial para operações da equipe.
+* **Entradas:** Orçamento da diretoria, patrocínios, prêmios por vitórias/títulos, venda de jogadoras e conversões feitas pelo treinador (injeção de capital pessoal).
+* **Saídas:** Contratação de reforços (passe e salário), aprimoramento das 6 áreas da infraestrutura, taxas de torneios, pagamento de multas rescisórias por dispensa de atletas e custos de treinos.
+* **Riscos:** Queda de arrecadação por derrotas, cortes de diretoria ou falência (que resulta na demissão do treinador).
 
-**Entradas (Como o clube recebe):**
-* Orçamento liberado pela diretoria
-* Patrocínios
-* Recompensas por vitórias em partidas
-* Recompensa dourada por títulos (Premiações)
-
-**Saídas (Como o clube gasta):**
-* Contratação de reforços
-* Aprimoramento da sede e infraestrutura
-* Treinamento do time
-* Tratamento médico de lesões
-* Taxas de inscrição em torneios
-* Custos de viagem e logística para amistosos fora de casa
-
-**Perdas (Riscos financeiros):**
-* Queda de arrecadação por derrotas em partidas
-* Cortes de orçamento impostos pela diretoria
-* Falência do clube (Zerar o caixa)
-
-### 👔 B) Moedas do Treinador
-Representa o dinheiro pessoal do jogador.
-
-**Entradas (Como o treinador recebe):**
-* Salário pago pelo clube
-* Cachês de entrevistas e marketing pessoal
-
-**Saídas (Como o treinador gasta):**
-* Pagamento de multa rescisória (para sair do clube atual)
-* Investimento no clube do próprio bolso (injeção de capital de emergência)
-
-**Perdas (Riscos pessoais):**
-* Cortes no salário por mau desempenho
-* Calote devido à falência do clube
+### 👔 B) Recursos do Treinador (Moedas Pessoais e Energia)
+Representa a capacidade física e o patrimônio do jogador.
+* **Moedas do Treinador (Entradas):** Salário do clube, cachês de entrevistas e compra via dinheiro real (IAP).
+* **Moedas do Treinador (Saídas):** Pagamento da própria multa rescisória (para trocar de clube) e doações para salvar o clube da falência.
+* **Energia (0 a 100%):** O recurso vital para ações de gestão. Aplicação de treinos táticos e dar entrevistas consomem Energia. Iniciar partidas não exige Energia, mas estar zerado bloqueia a preparação da equipe. A Energia recarrega passivamente após as rodadas ou ao longo do tempo (offline).
 
 ---
 
-## 3. Game Over e Progressão
-O jogo **não** possui um "Game Over" tradicional onde o jogador perde o perfil e precisa recriar o personagem. A progressão é contínua e punitiva caso haja má gestão:
-
-* **Demissão e Falência:** Caso o treinador seja demitido por má performance ou o clube vá à falência, a **reputação** do jogador sofre uma queda drástica.
-* **Consequência:** Com a reputação manchada, portas se fecham. Será muito difícil conseguir propostas de clubes de nível médio ou alto. O jogador é obrigado a recomeçar com recursos escassos, assumindo um clube da **Superliga B**, precisando provar seu valor novamente para reerguer sua carreira.
+## 3. Game Over e Progressão de Campanhas
+* **Saves:** O jogador pode gerenciar até 3 campanhas simultâneas, criando avatares customizados para cada uma.
+* **Progresso Contínuo:** O jogo não possui "Game Over" de perda de perfil. Caso seja demitido ou o clube falia, a **Reputação** do treinador cai drasticamente, forçando-o a assumir clubes de divisões inferiores para reconstruir a carreira.
+* **Simulação Global:** O mundo do jogo é vivo. Clubes controlados pelo computador (IA procedural) disputam títulos em outras ligas, mantendo um histórico global realista de vitórias e transferências.
 
 ---
 
 ## 4. Entidades e Atributos (Mecânicas de Jogo)
 
-Esta seção define as características de cada elemento do jogo e como elas impactam a jogabilidade, a simulação das partidas e a gestão do time.
-
 ### 👔 4.1. O Treinador (Personagem do Jogador)
-Os atributos do treinador definem a sua capacidade de liderança e abrem portas para clubes melhores.
-* **Experiência (XP):** Aumenta ao jogar e vencer partidas (vitórias por 3x0 dão bônus). Define o nível geral do treinador.
-* **Perspicácia:** Afeta o sucesso das decisões táticas tomadas em tempo real durante os eventos de texto das partidas (ex: pedir um desafio de arbitragem ou fazer uma inversão de 5x1).
-* **Reputação:** O seu "currículo". Afetado por títulos ganhos, demissões ou falências de clubes. Define o nível dos clubes que farão propostas de emprego no final da temporada.
+* **Atributos de Progressão:** Experiência (XP), Perspicácia (tática em partidas) e Reputação (currículo).
+* **Atributos de Status:** Energia Atual (0-100%) e Caixa Pessoal.
 
 ### 🏐 4.2. As Jogadoras (As Cartinhas)
-Cada jogadora possui atributos que influenciam diretamente no desempenho do time nas simulações de partidas e eventos.
+* **Atributos Base:** Posição, Técnica, Força, Agilidade, Visão de Jogo e Resistência.
+* **Atributos Dinâmicos:** 
+  * **Stamina:** Cai ao longo dos sets. Afeta o rendimento e aumenta chance de lesões (Status: Saudável, Fadigada, Lesionada).
+  * **Moral:** Afetada pelo ambiente do clube e minutos jogados.
+* **Mercado:** Jogadoras possuem Valor de Passe dinâmico. Propostas abaixo do valor exigido têm chance alta de recusa. Clubes rivais podem pagar a multa e levar a jogadora abruptamente.
 
-**Atributos Base (Fixos / Evolutivos via Treino):**
-* **Posição:** Levantadora, Oposta, Ponteira, Central ou Líbero.
-* **Técnica:** Define a precisão dos passes, saques e capacidade de furar bloqueios.
-* **Força:** Potência do ataque e do saque.
-* **Agilidade:** Tempo de reação para defesas e bloqueios.
-* **Visão de Jogo:** Inteligência tática, reduzindo a chance de erros não forçados.
-* **Resistência:** A capacidade máxima de esforço físico. Define quão rápido a jogadora perde **Stamina** e a sua imunidade a lesões.
+### 🏢 4.3. O Clube e Infraestrutura
+* **Nível Geral (0 a 100%):** Média das 6 áreas (Arquibancadas, Staff, Equipamentos, Médicos, Quadra e Marketing). Infraestruturas altas atraem patrocínios, reduzem lesões e facilitam contratações de estrelas.
+* **Divisão Atual:** Define permissões de torneios e o orçamento base.
 
-**Atributos Dinâmicos (Variam ao longo da temporada e partidas):**
-* **Stamina:** O principal recurso durante o jogo. Cai ao longo dos sets. Jogadoras sem stamina erram mais e têm alta chance de lesão se mantidas em quadra.
-* **Condição Física (Lesão):** Pode ser Saudável, Fadigada ou Lesionada. Impacta se a jogadora pode ser escalada.
-* **Moral:** Afetada por vitórias, derrotas e infraestrutura do clube. Jogadoras com moral baixa rendem abaixo dos seus atributos base.
+### 🏆 4.4. Competições
+* **Formato de Acesso:** Vencer a divisão sobe de liga. Chegar à final da Liga A garante vaga no Intercontinental no ano seguinte. A final do Intercontinental garante vaga no Mundial.
+* **Regras de Partida:** Jogos são "Melhor de 3" (sets até 25, tie-break até 15). É obrigatória a formação 7 em quadra correta, limites de desafios (2 erros) e tempos técnicos (2 por set).
 
-### 🏢 4.3. O Clube
-A estrutura que o jogador gerencia.
-* **Nível da Sede / Arena:** Começa precário em clubes da Liga B. Melhorar a arena atrai mais público (mais moedas), patrocínios melhores e propostas de amistosos mais lucrativos. Jogadoras tendem a aceitar mais propostas de clubes sofisticados.
-* **Orçamento Disponível:** O dinheiro em caixa do clube no momento. 
-* **Divisão Atual:** Define em quais campeonatos nacionais o clube tem permissão para jogar.
-
-### 🏆 4.4. Competições (Ligas, Copas e Internacionais)
-Cada torneio tem características que definem o risco e a recompensa para o clube.
-* **Nível de Prestígio:** Campeonatos maiores (como o Mundial e Continental) dão mais XP e possuem maior influência na **Reputação** do treinador. Vitórias e em especial o título rendem mais moedas.
-* **Premiação Base:** O valor financeiro que entra no caixa do clube ao final da competição, de acordo com a posição na tabela.
-* **Custo de Participação:** Torneios menores ou amistosos longes podem ter custos logísticos altos em relação à premiação, exigindo planejamento financeiro.
-* **Vagas de Acesso:** Vencer uma divisão garante vaga na divisão superior. Vencer o Continental dá acesso ao Mundial na temporada seguinte.
+### 🃏 4.5. Intervenções Táticas e Minigame
+* **Blocos de Pontos:** A partida avança em blocos simulados.
+* **Eventos de Texto:** Interrupções para decisões rápidas (lesões, inversões).
+* **Minigame de Cartas:** Durante a partida, o treinador pode escolher entre 3 cartas ocultas (2 buffs positivos, 1 debuff negativo) para tentar alterar o ritmo do jogo, assumindo riscos.
