@@ -1,3 +1,10 @@
+### 2. Diagrama de Banco de Dados / DER Atualizado (`DER.md`)
+
+Como o jogo usará SQLite (relacional), transformar aquele "Dicionário" em colunas reais na tabela `JOGADORA` é a melhor prática. Isso permite que você faça buscas rápidas no código, como: *"Me traga todas as jogadoras disponíveis no mercado que tenham Força maior que 80"*.
+
+Substitua seu arquivo do DER por este:
+
+```markdown
 # Diagrama Entidade-Relacionamento (DER) - Base de Dados
 
 Este diagrama ilustra a estrutura das tabelas na base de dados relacional (SQLite) para guardar o estado do jogo localmente no dispositivo (*Offline First*).
@@ -48,10 +55,8 @@ erDiagram
     INFRAESTRUTURA {
         string id PK
         string clube_id FK
-        int arquibancadas
-        int equipe_medica
+        int ct
         int marketing
-        int quadra_instalacoes
         int staff
         int equipamentos
     }
@@ -59,9 +64,14 @@ erDiagram
     JOGADORA {
         string id PK
         string campanha_id FK
-        string clube_id FK "Nulo se agente livre (Mercado)"
+        string clube_id FK "Nulo se agente livre"
         string nome
         string posicao
+        int tecnica
+        int forca
+        int agilidade
+        int visao
+        int resistencia
         float stamina_atual
         string status_fisico
         float salario
