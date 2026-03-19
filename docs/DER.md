@@ -1,37 +1,35 @@
-
-```markdown
 # Diagrama Entidade-Relacionamento (DER) - Base de Dados
 
-Este diagrama ilustra a estrutura das tabelas na base de dados relacional (SQLite) para guardar o estado do jogo localmente no dispositivo (*Offline First*).
+Este diagrama ilustra a estrutura das tabelas na base de dados relacional (SQLite) para guardar o estado do jogo localmente no dispositivo (Offline First).
 
 ```mermaid
 erDiagram
     %% Relacionamentos do Mundo do Jogo (Isolamento por Campanha)
-    CAMPANHA ||--|| TREINADOR : "possui (1:1)"
-    CAMPANHA ||--|{ CLUBE : "contém estado de (1:N)"
-    CAMPANHA ||--|{ JOGADORA : "contém estado de (1:N)"
-    CAMPANHA ||--|{ TORNEIO : "contém (1:N)"
+    CAMPANHA ||--|| TREINADOR : "possui"
+    CAMPANHA ||--|{ CLUBE : "contem estado de"
+    CAMPANHA ||--|{ JOGADORA : "contem estado de"
+    CAMPANHA ||--|{ TORNEIO : "contem"
 
     %% Relacionamentos de Negócio
-    CLUBE ||--o| TREINADOR : "emprega (1:0..1)"
-    CLUBE ||--|| INFRAESTRUTURA : "possui (1:1)"
-    CLUBE ||--|{ JOGADORA : "contrata (1:N)"
+    CLUBE ||--o| TREINADOR : "emprega"
+    CLUBE ||--|| INFRAESTRUTURA : "possui"
+    CLUBE ||--|{ JOGADORA : "contrata"
 
-    %% Relacionamento Muitos-para-Muitos resolvido com Tabela de Junção
+    %% Relacionamento Muitos-para-Muitos resolvido com Tabela de Juncao
     CLUBE }|--|{ CLUBE_TORNEIO : "disputa"
     TORNEIO ||--|{ CLUBE_TORNEIO : "agrega"
 
     %% Tabelas e Atributos
     CAMPANHA {
         string id PK
-        int slot "1 a 3"
+        int slot
         datetime data_criacao
     }
 
     TREINADOR {
         string id PK
         string campanha_id FK
-        string clube_id FK "Pode ser nulo"
+        string clube_id FK
         string nome
         float energia_atual
         float caixa_pessoal
@@ -59,7 +57,7 @@ erDiagram
     JOGADORA {
         string id PK
         string campanha_id FK
-        string clube_id FK "Nulo se agente livre"
+        string clube_id FK
         string nome
         string posicao
         int tecnica
@@ -80,9 +78,8 @@ erDiagram
         int ano_edicao
     }
 
-    %% Tabela de Junção (Registo de histórico e participação)
     CLUBE_TORNEIO {
         string clube_id FK
         string torneio_id FK
-        string fase_alcancada "Ex: Final, Quartos, Campeão"
+        string fase_alcancada
     }
