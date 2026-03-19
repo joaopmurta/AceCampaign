@@ -6,7 +6,7 @@ Abaixo está o diagrama de classes do sistema, modelado com base na arquitetura 
 classDiagram
     %% Relacionamentos
     Campanha "1" *-- "1" Treinador : possui
-    Treinador "0..1" -- "1" Clube : gerencia
+    Treinador "1" --> "0..1" Clube : gerencia
     Clube "1" *-- "1" Infraestrutura : contem
     Clube "1" o-- "10..14" Jogadora : elenco
     GerenciadorDeTemporada "1" --> "*" Torneio : organiza
@@ -44,10 +44,10 @@ classDiagram
     }
 
     class Infraestrutura {
-        +Int arquibancadas
-        +Int equipe_medica
-        +Int quadra_instalacoes
+        +Int ct
         +Int marketing
+        +Int staff
+        +Int equipamentos
         +calcular_nivel_geral() Float
         +melhorar_area(tipo)
     }
@@ -56,6 +56,11 @@ classDiagram
         +UUID id_jogadora
         +String nome
         +String posicao
+        +Int tecnica
+        +Int forca
+        +Int agilidade
+        +Int visao
+        +Int resistencia
         +Float stamina_atual
         +String status_fisico
         +Float valor_passe
@@ -77,11 +82,6 @@ classDiagram
         +simular_bloco_pontos()
         +invocar_minigame_cartas()
         +disparar_evento_texto()
-    }
-
-    class MercadoDeTransferencias {
-        +calcular_probabilidade_aceite()
-        +gerar_evento_multa_paga()
     }
 
     class MercadoDeTransferencias {
