@@ -1,10 +1,3 @@
----
-
-### 2. Diagrama de Banco de Dados / DER Atualizado (`DER.md`)
-
-Como o jogo usará SQLite (relacional), transformar aquele "Dicionário" em colunas reais na tabela `JOGADORA` é a melhor prática. Isso permite que você faça buscas rápidas no código, como: *"Me traga todas as jogadoras disponíveis no mercado que tenham Força maior que 80"*.
-
-Substitua seu arquivo do DER por este:
 
 ```markdown
 # Diagrama Entidade-Relacionamento (DER) - Base de Dados
