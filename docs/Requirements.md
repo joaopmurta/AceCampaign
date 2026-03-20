@@ -10,7 +10,7 @@ Este documento lista todas as funcionalidades, regras de negócio e restrições
 ### 💾 Criação de Perfil e Gestão de Campanhas
 * **RF001:** O sistema deve permitir que o jogador crie e gerencie até 3 campanhas (saves) simultâneas e independentes.
 * **RF002:** O sistema deve permitir a customização do avatar do treinador no início da jornada (escolha de gênero, estilo visual, nome e nacionalidade).
-* **RF003:** O sistema deve iniciar todas as campanhas em um cenário "limpo", onde nenhum clube ou treinador possui títulos ou medalhas prévias no histórico.
+* **RF003:** O sistema deve iniciar todas as campanhas em um cenário "limpo", onde nenhum clube ou atleta possui títulos ou medalhas prévias no histórico.
 
 ### 👔 Gestão e Energia do Treinador (O Jogador)
 * **RF004:** O sistema deve permitir que o jogador assine contratos com um clube no início de uma temporada dadas as opções disponíveis.
@@ -25,8 +25,8 @@ Este documento lista todas as funcionalidades, regras de negócio e restrições
 * **RF013:** O sistema deve registrar as conquistas do treinador em seu histórico.
 
 ### 🏢 Gestão do Clube e Infraestrutura
-* **RF014:** O sistema deve permitir a melhoria de 6 áreas da infraestrutura (Arquibancadas, Staff, Equipamentos, Médicos, Quadra, Marketing), descontando do orçamento do clube.
-* **RF015:** O sistema deve calcular o nível geral do clube (0 a 100%) baseado na média dessas 6 áreas.
+* **RF014:** O sistema deve permitir a melhoria de 4 áreas da infraestrutura (CT, Staff, Equipamentos, Marketing), descontando do orçamento do clube.
+* **RF015:** O sistema deve calcular o nível geral do clube (0 a 100%) baseado na média dessas 4 áreas.
 * **RF016:** O sistema deve decretar a falência do clube caso o orçamento fique negativo e não seja coberto, demitindo o treinador.
 
 ### 🛒 Mercado de Transferências e Elenco
@@ -41,21 +41,25 @@ Este documento lista todas as funcionalidades, regras de negócio e restrições
 
 ### 🏐 Escalação e Estatísticas
 * **RF025:** O sistema deve permitir a formação de um elenco de no mínimo 10 e no máximo 14 jogadoras por temporada.
-* **RF026:** O sistema deve exibir painéis de estatísticas individuais (ataque, bloqueio, saque, defesa/passe) adaptados por posição.
+* **RF026:** O sistema deve exibir painéis de estatísticas individuais (ataque, bloqueio, saque, defesa e passe) adaptados por posição.
 * **RF027:** O sistema deve calcular a média de desempenho coletivo e individual por partida e campeonato.
 
 ### 🎮 Motor de Partida e Intervenções Táticas
 * **RF028:** O sistema deve simular a partida em "blocos de pontos", distribuindo a autoria obrigatoriamente para as jogadoras em quadra (ou erro adversário), batendo exatamente com o placar.
 * **RF029:** O sistema deve interromper a simulação aleatoriamente para "Eventos de Texto" (lesões, desafios, inversão) com tempo limite de resposta.
 * **RF030:** O sistema deve exibir um "Minigame de Cartas" durante a partida, oferecendo 3 opções ocultas (2 com buffs temporários positivos e 1 com debuff negativo) para o treinador escolher, adicionando risco/recompensa à tática.
-* **RF031:** O sistema deve exibir uma interface de "Tempo Técnico", permitindo escolher 2 de 4 instruções táticas processuais.
+* **RF031:** O sistema deve exibir uma interface de "Tempo Técnico", que gera um buff de 10% em toda a equipe temporariamente após o pedido técnico.
 
 ### 🌎 Temporadas e Simulação Global
-* **RF032:** O sistema deve inicializar o banco de dados com ligas de países tradicionais (Brasil, Itália, Turquia, Polônia, EUA, Japão, China e Rússia).
+* **RF032:** O sistema deve inicializar o banco de dados com 5 ligas nacionais padrão (Brasil, Itália, Turquia, EUA e Rússia), contendo 16 clubes cada (8 na Divisão A, 8 na Divisão B), totalizando 80 clubes no ecossistema global.
 * **RF033:** O sistema deve avançar o calendário, intercalando partidas da Liga Nacional e competições mata-mata.
 * **RF034:** Ao final de cada temporada, o sistema deve envelhecer jogadoras, distribuir prêmios e aplicar as classificações para torneios internacionais.
 * **RF035:** O sistema deve utilizar um algoritmo de simulação para processar os resultados e atribuir títulos aos clubes controlados pelo computador nas outras ligas mundiais, mantendo o histórico consistente.
+* **RF036:** Ao final de cada temporada, o sistema deve processar o acesso e rebaixamento automático: os 2 últimos colocados da Divisão A caem para a Divisão B, e os 2 primeiros da Divisão B sobem para a Divisão A.
 
+* **RF037:** Clubes recém-promovidos para a Divisão A devem receber um leve "Buff" em orçamento e atributos para serem competitivos, enquanto clubes rebaixados devem receber um "Debuff" estrutural e financeiro, simulando a queda de rendimento e perda de patrocinadores.
+
+* **RF038:** O sistema deve aplicar um reajuste dinâmico de dificuldade (Rubberbanding) na evolução dos atributos das jogadoras controladas pela IA, escalonando o nível global dos adversários de forma proporcional ao crescimento de nível da equipe do jogador, evitando que o fim de jogo (late-game) se torne monótono.
 ---
 
 ## 2. Regras de Negócio (RN)
